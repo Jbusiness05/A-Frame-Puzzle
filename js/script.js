@@ -6,9 +6,9 @@ AFRAME.registerComponent('update-score-text', {
 
     init: function () {
       // Do something when component first attached.
-      var stringToPrint = this.data
-      var textBox = document.querySelector("#scoreText")
-      textBox.setAttribute('value',stringToPrint)
+      var stringToPrint = this.data;
+      var textBox = document.querySelector("#scoreText");
+      textBox.setAttribute('value',stringToPrint);
     },
 
     update: function () {
