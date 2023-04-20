@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Script Linking to A frame -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+
+    <!-- Link to my custom script -->
+    <script src="js/script.js"></script>
+    <title>Interstellar</title>
+    <link rel="stylesheet" href="style.css">
+    <a-assets>
+        <img id="youwin" src="Assets/images.jpeg">
+    </a-assets>
+</head>
+
+<body>
+    <a-scene>
+        <a-camera>
+            <!-- Since we are now using the "animation" component for the visual feedback,
+                 we need to create 2 different animations using 2 different IDs (line 42 and 48),
+                 that are 1 for mouseenter and 1 for mouseleave and that we can specify in the
+                 "startEvents" property (lines 46 and 52).
+                 You can find all the animation component properties here:
+                 https://aframe.io/docs/1.0.0/components/animation.html#properties.
+
+                 Then, to reset the cursor scale once the click event is fired, we need to use
+                 the event-set component and listen to the "animationcomplete__enter" event emitted
+                 by the animation__enter component once the animation completes.
+                 Note the syntax animationcomplete__ID (line 47) which matches the name (ID) we assigned to the animation on mouseenter (animation__enter at line 42).
+                 You can read more about the events emitted by the animation component here:
+                 https://aframe.io/docs/1.0.0/components/animation.html#events -->
+            <a-entity cursor="fuse: true; fuseTimeout: 1000" position="0 0 -1"
+                geometry="primitive: sphere; radius: 0.005" material="color: #000000; shader: flat; opacity: 0.5"
+                animation__enter="property: scale;
+                                        to: 3 3 3;
+                                        dur: 1000;
+                                        easing: linear;
+                                        startEvents: mouseenter"
+                event-set__reset="_event: animationcomplete__enter; scale: 1 1 1" animation__leave="property: scale;
+                                        to: 1 1 1;
+                                        dur: 1000;
+                                        easing: linear;
+                                        startEvents: mouseleave">
+            </a-entity>
+        </a-camera>
+        <a-plane color="#7BC8A4" position="0 0 -4" rotation="-90 0 0" width="120" height="120"></a-plane>
+        <a-entity scale="5 5 5" position="35 0 -5">
+            <!-- Red Room -->
+            <a-box color="red" position="-1 0.5 -3" scale="2 4 2" side="double" id="redroom"></a-box>
+            <!-- Green Room -->
+            <a-box color="green" position="-5 0.5 -3" scale="2 4 2" side="double" id="greenroom"></a-box>
+            <!-- Blue Room -->
+            <a-box color="blue" position="-9 0.5 -3" scale="2 4 2" side="double" id="blueroom"></a-box>
+            <!-- Yellow Room -->
+            <a-box color="yellow" position="-13 0.5 -3" scale="2 4 2" side="double" id="yellowroom"></a-box>
+            <!-- Red-Green Hallway -->
+            <a-box color="violet" position="-3 0.5 -3" scale="2 1 2" side="double"></a-box>
+            <!-- Green-Blue Hallway -->
+            <a-box color="teal" position="-7 0.5 -3" scale="2 1 2" side="double"></a-box>
+            <!-- Blue-Yellow Hallway -->
+            <a-box color="cyan" position="-11 0.5 -3" scale="2 1 2" side="double"></a-box>
+            <a-box color="red" position="-17 0.5 -3"></a-box>
+
+        </a-entity>
+        <!-- New Box -->
+        <a-box color="black" position="-5 -100 0" scale="12 15 12" side="double" id="newroom"></a-box>
+        <a-box color="#AA0000" position="-5 0 20" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+            event-set__leave="_event: mouseleave; material.color: #AA0000"
+            event-set_tarpos="_event: click; _target: #youwin; position: -5 0 20">
+        </a-box>
+        <!-- Buttons -->
+        <a-entity position="-5 0 0">
+            <!-- Left Red Box -->
+            <a-box color="#AA0000" position="2 0 -7" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000">
+            </a-box>
+            <!-- Right Red Box -->
+            <a-box color="#AA0000" position="6 0 -7" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000"
+                event-set__tarpos="_event: click; _target: #yellowroom; position: 2 -100 -5">
+            </a-box>
+            <!-- Middle Red Box -->
+            <a-box color="#AA0000" position="4 0 -7" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000"
+                event-set__tarpos="_event: click; _target: #greenroom; position: 2 -100 -5">
+            </a-box>
+            <!-- Left Middle Red Box -->
+            <a-box color="#AA0000" position="2 0 -5" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000">
+            </a-box>
+            <!-- Right Middle Red Box -->
+            <a-box color="#AA0000" position="6 0 -5" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000"
+                event-set__tarcol="_event: click; _target: #gree; material.color: #00FF00">
+            </a-box>
+            <!-- Middle Middle Red Box -->
+            <a-box color="#AA0000" position="4 0 -5" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000"
+                event-set__tarpos="_event: click; _target: #blueroom; position: 2 -100 -5">
+            </a-box>
+            <!-- Left Back Red Box -->
+            <a-box color="#AA0000" position="2 0 -3" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000">
+            </a-box>
+            <!-- Right Back Red Box -->
+            <a-box color="#AA0000" position="6 0 -3" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000"
+                event-set__tarpos="_event: click; _target: #redroom; position: 2 -100 -5">
+            </a-box>
+            <!-- Middle Back Red Box -->
+            <a-box color="#AA0000" position="4 0 -3" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000">
+            </a-box>
+            <!-- Creation Box -->
+            <a-box color="#AA0000" position="-5 0 -20" event-set__enter="_event: mouseenter; material.color: #FFFF00"
+                event-set__leave="_event: mouseleave; material.color: #AA0000"
+                event-set__tarpos="_event: click; _target: #newroom; position: -5 0 20">
+            </a-box>
+        </a-entity>
+    </a-scene>
+</body>
+
+</html>
